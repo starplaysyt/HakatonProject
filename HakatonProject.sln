@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HakatonProject", "HakatonProject\HakatonProject.csproj", "{BA7D23AB-5F9A-478D-BAF7-A482ACA8EEED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA7D23AB-5F9A-478D-BAF7-A482ACA8EEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA7D23AB-5F9A-478D-BAF7-A482ACA8EEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA7D23AB-5F9A-478D-BAF7-A482ACA8EEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA7D23AB-5F9A-478D-BAF7-A482ACA8EEED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
