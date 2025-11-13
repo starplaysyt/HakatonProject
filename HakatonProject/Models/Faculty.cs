@@ -1,6 +1,4 @@
-namespace HakatonProject.Models;
-
-public class Interest
+public class Faculty
 {
     public long Id { get; set; }
     public string Name { get; set; }
