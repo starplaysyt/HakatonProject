@@ -1,22 +1,20 @@
 using HakatonProject.Data;
 
+
+public enum EventRepositoryErrors
+{
+    None = 0,
+    EventNotFound = 1,
+}
+
 public class EventRepository(ApplicationDataDbContext _dbContext)
 {
     private readonly ApplicationDataDbContext dbContext = _dbContext;
 
-    public async Task<List<Event>> GetEvents()
+    public EventRepositoryErrors TryAddEvent(Event e)
     {
-        return dbContext.Events.ToList();
+        dbContext.Events.Add(e);
+        dbContext.SaveChanges();
+        return EventRepositoryErrors.None;
     }
-
-    public async Task CreateEvent(Event _event)
-    {
-        await dbContext.AddAsync(_event);
-        await dbContext.SaveChangesAsync();
-    }
-
-    // public async Task<List<string>> GetOwnerEventTypes(long ownerId)
-    // {
-    //     return dbContext.Events.Where(x => x.EventOwner.Id == ownerId).Select(x => x.Type).ToList();
-    // }
 }
