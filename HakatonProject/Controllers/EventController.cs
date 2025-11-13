@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -18,13 +19,14 @@ public class EventController : ControllerBase
         return Ok(events);
     }
 
+
     [HttpPost]
-    public ActionResult CreateEvent()
+    public async Task<ActionResult> CreateEvent(Event _event)
     {
         try
         {
-            _eventRepository.CreateEvent();
-            return Ok();   
+            await _eventRepository.CreateEvent(_event);
+            return Ok();
         }
         catch(Exception ex)
         {
