@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using HakatonProject.Data;
 using HakatonProject.Models;
+using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -16,17 +17,20 @@ public class UserController(ApplicationDataDbContext context) : Controller
     
     private readonly UserRepository userRepository = new UserRepository(context);
     
+    private readonly FacultiesRepository facultyRepository = new FacultiesRepository(context);
+    
     [HttpPost("/login")]
-    public ActionResult Login(string username, string password)
+    public async Task<ActionResult> Login(string username, string password)
     {
         //trying login as simple user
-        var res = userRepository.TryGetUser(out var user, username);
+        var user = await userRepository.GetUser(username);
         
-        if (res is UserRepositoryErrors.UserNotFound || user is null) return Unauthorized();
+        if (user is null) return Unauthorized();
 
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.Login),
+            new Claim(ClaimTypes.Role, user.UserGroup),
             new Claim("userId", user.Id.ToString())
         };
 
@@ -42,19 +46,30 @@ public class UserController(ApplicationDataDbContext context) : Controller
         return Ok(tokenString);
     }
 
-    [HttpGet("/register")]
-    public ActionResult Register(byte[] jsonEntry)
+    [HttpPost("/register")]
+    public async Task<ActionResult> Register(string name, string username, string password, string job, long facultyId, string userGroup)
     {
-        var user = JsonSerializer.Deserialize<User>(jsonEntry);
-        
-        if (user is null) return BadRequest("WasNull");
-        
-        var res = userRepository.TryAddUser(user);
+        if (userGroup is not "Owner" or "User") return UnprocessableEntity("Invalid UserGroup");
 
-        if (res == UserRepositoryErrors.None)
-            return Ok();
+        if (await userRepository.GetUser(username) is not null) return UnprocessableEntity("Username occupied");
+        
+        var faculty = await facultyRepository.GetFacultyById(facultyId);
+        
+        if (faculty is null) return UnprocessableEntity("Faculty Id is invalid");
+        
+        var user = new User()
+        {
+            Name = name,
+            Login = username,
+            Password = password,
+            Job = job,
+            UserFaculty = faculty,
+            UserGroup = userGroup
+        };
+        
+        var res = userRepository.AddUser(user);
 
-        return BadRequest(res.ToString());
+        return Ok();
     }
     
     [HttpGet("{username}")]
