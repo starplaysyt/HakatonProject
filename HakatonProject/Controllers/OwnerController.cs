@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -7,6 +6,5 @@ public class OwnerController
 {
     public async Task GetEventAnalytic()
     {
-        
     }
 }
