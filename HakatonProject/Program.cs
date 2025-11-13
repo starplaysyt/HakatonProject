@@ -1,5 +1,6 @@
 using System.Text;
 using HakatonProject.Data;
+using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,15 @@ var globalLogger = loggerFactory.CreateLogger("Global"); //Глобальный 
 
 builder.Services.AddSingleton(loggerFactory);
 builder.Services.AddSingleton(globalLogger);
+
+builder.Services.AddScoped<EventRepository>();
+builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<FacultiesRepository>();
+builder.Services.AddScoped<InterestRepository>();
+builder.Services.AddScoped<PlaceRepository>();
+builder.Services.AddScoped<UserEventRepository>();
+builder.Services.AddScoped<UserInterestRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 // Add services to the container.
 var connectionAuthString = builder.Configuration.GetConnectionString("AuthConnection") ??

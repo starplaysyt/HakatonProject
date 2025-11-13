@@ -32,7 +32,7 @@ public class EventController : ControllerBase
     {
         Event newEvent = new Event();
 
-        newEvent.Owner = new User();
+        newEvent.Owner = await _userRepository.GetUser(User.FindFirst("userId").Value);
         newEvent.Name = dto.Name;
         newEvent.Description = dto.Description;
         newEvent.Place = await _placeRepository.GetPlace(dto.PlaceId) ?? throw new Exception("No place founded");
