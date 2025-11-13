@@ -15,5 +15,5 @@ public class UserRepository(ApplicationDataDbContext _dbContext)
     {
         await dbContext.Users.AddAsync(user);
         await dbContext.SaveChangesAsync();
-    } 
+    }
 }
