@@ -26,32 +26,45 @@ public class EventController : ControllerBase
     }
 
 
-    [HttpPost]
-    [Route("create")]
+    [HttpPost("create")]
     public async Task<ActionResult> CreateEvent(CreateEventDTO dto)
     {
-        var place = await _placeRepository.GetPlace(dto.PlaceId) ?? throw new Exception("No place founded");
-        if(place == null)
-            return BadRequest("Place not founded");
+        try{
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized("User not authenticated");
 
-        Event newEvent = new Event{
-            Owner = await _userRepository.GetUser(User.FindFirst("userId").Value),
-            Name = dto.Name,
-            Description = dto.Description,
-            Place = place,
-            TimeStart = dto.TimeStart,
-            TimeEnd = dto.TimeEnd,
-            Type = dto.Type
-        };
+            if (!int.TryParse(userIdClaim, out int userId))
+                return BadRequest("Invalid user ID format");
 
-        try
-        {
+            var user = await _userRepository.GetUser(userId);
+            if (user == null)
+                return BadRequest("User not found in database");
+
+            var place = await _placeRepository.GetPlace(dto.PlaceId);
+            if (place == null)
+                return BadRequest("Place not found");
+
+            Event newEvent = new Event
+            {
+                Owner = user,
+                Name = dto.Name,
+                Description = dto.Description,
+                Place = place,
+                TimeStart = dto.TimeStart,
+                TimeEnd = dto.TimeEnd,
+                Type = dto.Type
+            };
+
             await _eventRepository.TryCreateEvent(newEvent);
-            return Ok(newEvent);
+            return Ok(new { 
+                message = "Event created successfully", 
+                eventId = newEvent.Id 
+            });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new { error = ex.Message });
         }
     }
 }
