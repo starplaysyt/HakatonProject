@@ -20,11 +20,18 @@ public class EventController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult> CreateEvent(Event _event)
+    public async Task<ActionResult> CreateEvent(CreateEventDTO dto)
     {
+        Event newEvent = new Event();
+
+        newEvent.Name = dto.Name;
+        newEvent.Description = dto.Description;
+        newEvent.TimeStart = dto.TimeStart;
+        newEvent.TimeEnd = dto.TimeEnd;
+
         try
         {
-            await _eventRepository.CreateEvent(_event);
+            await _eventRepository.TryCreateEvent(newEvent);
             return Ok();
         }
         catch (Exception ex)
@@ -32,4 +39,12 @@ public class EventController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+}
+
+public class CreateEventDTO
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public DateTime TimeStart { get; set; }
+    public DateTime TimeEnd { get; set; }
 }
