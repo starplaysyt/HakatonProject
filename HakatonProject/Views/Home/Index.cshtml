@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    
+
     var events = new[]
     {
         new { Name = "Культура", Start = "10:00", End = "12:00", Icon = "fa7-solid:museum" },
@@ -60,12 +60,37 @@
 
             <div class="chart-wrapper">
                 <canvas id="weekStatsChart"></canvas>
+
+                <script>
+                    // Получаем данные с бэкенда через fetch
+                    fetch('/api/ChartData')
+                        .then(response => response.json())
+                        .then(chartData => {
+                            const ctx = document.getElementById('weekStatsChart').getContext('2d');
+                            new Chart(ctx, {
+                                type: 'bar',
+                                data: chartData,
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {position: 'top'}
+                                    },
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                        .catch(error => console.error('Ошибка при загрузке данных для Chart.js:', error));
+                </script>
             </div>
         </div>
 
         <div class="widget events-card">
             <div class="header-ec"><h3><span class="iconify" data-icon="material-symbols:event-note-rounded"></span>
-                Мероприятия</h3></div>
+                    Мероприятия</h3></div>
             <ul class="event-list">
                 @foreach (var e in events)
                 {
