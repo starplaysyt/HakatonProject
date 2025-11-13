@@ -1,6 +1,10 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 using HakatonProject.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+
+var universalSecretKey = Encoding.UTF8.GetBytes("AKJS-189A-1293-KLZQ");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +22,7 @@ builder.Services.AddSingleton(globalLogger);
 
 // Add services to the container.
 var connectionAuthString = builder.Configuration.GetConnectionString("AuthConnection") ??
-                       throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
+                           throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 
 var connectionDataString = builder.Configuration.GetConnectionString("DataConnection") ??
                            throw new InvalidOperationException("Connection string 'DataConnection' not found.");
@@ -30,10 +34,25 @@ builder.Services.AddDbContext<ApplicationDataDbContext>(options => options.UseSq
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationAuthDbContext>();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(universalSecretKey)
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -59,13 +78,14 @@ else
 app.UseHttpsRedirection(); //мб удалить, если неправильно будет отрабатывать сертификат
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
 
 app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
+        "default",
+        "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.MapControllers(); //коннектим пути в контроллерах для работы Route и прямых указаний алиасов REST-запросов

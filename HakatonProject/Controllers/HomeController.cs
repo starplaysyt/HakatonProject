@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using HakatonProject.Data;
-using Microsoft.AspNetCore.Mvc;
 using HakatonProject.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HakatonProject.Controllers;
@@ -9,7 +9,7 @@ namespace HakatonProject.Controllers;
 public class HomeController : Controller
 {
     private readonly ApplicationDataDbContext _context;
-    
+
     private readonly ILogger _logger;
 
     public HomeController(ILogger logger, ApplicationDataDbContext context)
