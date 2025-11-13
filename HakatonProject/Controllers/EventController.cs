@@ -30,15 +30,19 @@ public class EventController : ControllerBase
     [Route("create")]
     public async Task<ActionResult> CreateEvent(CreateEventDTO dto)
     {
-        Event newEvent = new Event();
+        var place = await _placeRepository.GetPlace(dto.PlaceId) ?? throw new Exception("No place founded");
+        if(place == null)
+            return BadRequest("Place not founded");
 
-        newEvent.Owner = await _userRepository.GetUser(User.FindFirst("userId").Value);
-        newEvent.Name = dto.Name;
-        newEvent.Description = dto.Description;
-        newEvent.Place = await _placeRepository.GetPlace(dto.PlaceId) ?? throw new Exception("No place founded");
-        newEvent.TimeStart = dto.TimeStart;
-        newEvent.TimeEnd = dto.TimeEnd;
-        newEvent.Type = dto.Type;
+        Event newEvent = new Event{
+            Owner = await _userRepository.GetUser(User.FindFirst("userId").Value),
+            Name = dto.Name,
+            Description = dto.Description,
+            Place = place,
+            TimeStart = dto.TimeStart,
+            TimeEnd = dto.TimeEnd,
+            Type = dto.Type
+        };
 
         try
         {
