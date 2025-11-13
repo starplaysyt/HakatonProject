@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-var universalSecretKey = Encoding.UTF8.GetBytes("AKJS-189A-1293-KLZQ");
+var _universalKey = "AKJS-189A-1293-KLZQ"u8.ToArray();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +44,7 @@ builder.Services
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(universalSecretKey)
+            IssuerSigningKey = new SymmetricSecurityKey(_universalKey),
         };
     });
 

@@ -2,27 +2,48 @@ using HakatonProject.Data;
 using HakatonProject.Models;
 using Microsoft.EntityFrameworkCore;
 
+public enum UserRepositoryErrors
+{
+    None = 0,
+    UserNotFound = 1,
+    LoginOccupiedError = 2,
+}
+
 public class UserRepository(ApplicationDataDbContext _dbContext)
 {
     private readonly ApplicationDataDbContext dbContext = _dbContext;
 
-    public async Task<User> GetUserByUserName(string username)
+    public UserRepositoryErrors TryGetUser(out User? user, string? username)
     {
-        if (string.IsNullOrWhiteSpace(username))
-            throw new ArgumentException("Имя пользователя не может быть пустым!");
-
-        var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Name == username);
-
-        return user ?? throw new InvalidOperationException($"Пользователь с именем \"{user}\" не найден");
+        user = dbContext.Users.FirstOrDefault(x => x.Login == username);
+        
+        return user is null ? UserRepositoryErrors.UserNotFound : UserRepositoryErrors.None;
     }
 
-    public async Task<User?> TryGetFullUser(string username, string password)
+    public UserRepositoryErrors TryGetUser(out User? user, int id)
     {
-        return await dbContext.Users.FirstOrDefaultAsync(x => x.Login == username && x.Password == password);
+        user = dbContext.Users.FirstOrDefault(x => x.Id == id);
+        
+        return user is null ? UserRepositoryErrors.UserNotFound : UserRepositoryErrors.None;
     }
 
-    // public async Task<Owner?> TryGetFullOwner(string username, string password)
-    // {
-    //     return await dbContext.Owners.FirstOrDefaultAsync(x => x.Login == username && x.Password == password);
-    // }
+    public UserRepositoryErrors TryAddUser(User user)
+    {
+        if (!dbContext.Users.Any(x => x.Login == user.Login))
+            dbContext.Users.Add(user);
+        else
+            return UserRepositoryErrors.LoginOccupiedError;
+        
+        return UserRepositoryErrors.None;
+    }
+
+    public UserRepositoryErrors TryUpdateUser(User user)
+    {
+        if (dbContext.Users.Any(u => user.Id == u.Id))
+            return UserRepositoryErrors.UserNotFound;
+        
+        dbContext.Users.Update(user);
+        dbContext.SaveChanges();
+        return UserRepositoryErrors.None;
+    }
 }
