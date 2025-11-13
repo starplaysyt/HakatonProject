@@ -13,4 +13,7 @@ public class EventRepository(ApplicationDataDbContext _dbContext)
         await dbContext.AddAsync(_event);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<string>> GetOwnerEventTypes(long ownerId) => 
+        dbContext.Events.Where(x => x.EventOwner.Id == ownerId).Select(x => x.Type).ToList();
 }
