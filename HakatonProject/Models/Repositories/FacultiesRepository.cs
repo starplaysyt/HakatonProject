@@ -15,5 +15,11 @@ public class FacultiesRepository(ApplicationDataDbContext _dbContext)
     
     public async Task<Faculty?> GetFacultyById(int id) =>
         await dbContext.Faculties.FirstOrDefaultAsync(n => n.Id == id);
+
+    public async Task AddFaculty(Faculty faculty)
+    {
+        await dbContext.Faculties.AddAsync(faculty);
+        await dbContext.SaveChangesAsync();
+    }
     
 }
