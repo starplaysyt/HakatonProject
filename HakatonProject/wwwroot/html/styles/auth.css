@@ -1,0 +1,95 @@
+/* auth.css - Стили ТОЛЬКО для страницы Входа */
+
+/* Центрируем все на странице */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 96vh;
+    padding: 20px;
+}
+
+/* Контейнер для формы. Мы будем использовать класс .widget + .auth-card */
+.auth-card {
+    width: 100%;
+    width: 420px;
+    /* Анимация появления из style.css */
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Логотип */
+.logo-area {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Стилизуем наш Iconify */
+.logo-icon {
+    font-size: 52px;
+    color: #E0E0E0; /* Наш основной цвет текста */
+}
+
+.logo-text {
+    font-size: 14px;
+    color: #8B8DA0; /* Наш вторичный цвет текста */
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+/* Переключатель Вход/Регистрация */
+.auth-tabs {
+    display: flex;
+    background-color: #4A4C60; /* Наш "внутренний" фон карточки */
+    border-radius: 15px; /* Наш радиус */
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background-color: transparent;
+    color: #8B8DA0; /* Вторичный текст */
+    font-size: 16px;
+    font-family: "Nunito", sans-serif; /* Наш шрифт */
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.tab-button.active {
+    /* Градиент, как у иконки юзера в сайдбаре */
+    background: linear-gradient(180deg, #545871 0%, #484355 100%); 
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Скрытая форма */
+.auth-form.hidden {
+    display: none;
+}
+
+/* Ссылка "Забыли пароль" */
+.forgot-password {
+    display: block; /* Делаем блочным для центрирования */
+    text-align: center;
+    font-size: 14px;
+    color: #8B8DA0;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #E0E0E0;
+}
+
+.logo-area img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+
+}

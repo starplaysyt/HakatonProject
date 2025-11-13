@@ -15,6 +15,7 @@
     box-sizing: border-box;
     font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
+    
 }
 
 
@@ -29,6 +30,7 @@ body {
     display: grid;
     grid-template-columns: 80px 1fr; 
     min-height: 96vh;
+    overflow-x: clip;
 }
 
 .sidebar {
@@ -324,7 +326,6 @@ font-size: 40px;
 }
 
 .event-detail-info:hover {
-    transform: scale(1.01);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -338,6 +339,8 @@ font-size: 40px;
     color: #8B8DA0;
     min-height: 250px;
     border: 2px dashed #5A5D75;
+    background-position: center;
+    background-size: cover;
 }
 
 .event-detail-info {
@@ -631,4 +634,217 @@ font-size: 40px;
     margin-top: 20px;
     align-self: flex-end;
     width: 100%;
+}
+
+/* --- Стили для Виджета "Интересы" --- */
+
+:root {
+    /* Тематические цвета */
+    --color-culture: #99A669;
+    --color-sport: #B38F92;   
+    --color-volunteer: #99B992;
+    --color-science: #8AB8B9; 
+    --color-student: #9E8CB2; 
+}
+
+.interest-card-wrapper {
+    display: flex;
+    gap: 20px; 
+    flex-grow: 1; 
+    padding: 30px;
+    align-items: stretch;
+    transition: all 0.6s ease-in-out;
+}
+
+.interest-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 0;
+    flex-grow: 1;
+    transition: all 0.6s ease-in-out;
+}
+
+.interest-item-wrapper.shrunk {
+    flex-grow: 0 !important;
+    flex-basis: 0 !important;
+    opacity: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 0;
+    visibility: hidden;
+}
+
+.interest-label {
+    color: #E0E0E0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-align: left;
+    padding-left: 10px;
+    transition: opacity 0.3s 0.3s;
+    white-space: nowrap;
+}
+
+
+.interest-item-wrapper.shrunk .interest-label {
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+
+.interest-card {
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all 0.6s ease-in-out;
+    position: relative;
+    flex-grow: 1; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+}
+
+/* --- Стили для РАСКРЫТОЙ КОЛОНКИ --- */
+
+
+.interest-card.is-expanded {
+    background: transparent !important;
+    cursor: default;
+}
+
+
+.is-expanded-parent .interest-label {
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+
+.expanded-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.is-expanded .expanded-content {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.3s; 
+}
+
+
+.expanded-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding: 0;
+    flex-shrink: 0; 
+}
+
+
+.event-list-container {
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
+    padding-top: 20px;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 60;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* --- Стили карточек мероприятий (внутри) --- */
+.event-card {
+    background: #4A4C60;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    transition: transform 0.3s ease;
+    min-height: 180px;
+    flex-shrink: 0;
+}
+.event-card-image {
+    width: 30%;
+    background-size: cover;
+    background-position: center;
+    background-color: #3B3D50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    min-width: 150px;
+}
+.event-card-details {
+    width: 70%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.event-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.event-description {
+    color: #C0C0C0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+.event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+.event-time {
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+.btn-respond {
+    background-color: #5A5D75; 
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.btn-respond:hover {
+    background-color: #6A6D8A;
 }
