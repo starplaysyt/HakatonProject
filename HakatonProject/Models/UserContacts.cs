@@ -1,8 +1,7 @@
 namespace HakatonProject.Models;
 
-public class UserContact
+public class UserContact : IEntity
 {
-    public long UserId { get; set;}
     public string Type { get; set; }
     public string Value { get; set; }
 }

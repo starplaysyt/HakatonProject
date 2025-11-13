@@ -1,7 +1,6 @@
 namespace HakatonProject.Models;
 
-public class Interest
+public class Interest : IEntity
 {
-    public long Id { get; set; }
     public string Name { get; set; }
 }

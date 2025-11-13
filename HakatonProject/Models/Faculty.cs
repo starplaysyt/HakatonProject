@@ -1,5 +1,4 @@
-public class Faculty
+public class Faculty : IEntity
 {
-    public long Id { get; set; }
     public string Name { get; set; }
 }

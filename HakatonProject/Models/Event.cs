@@ -1,6 +1,5 @@
-public class Event
+public class Event : IEntity
 {
-    public long Id { get; set; }
     public string Name { get; set; }
     public DateTime TimeStart { get; set; }
     public DateTime TimeEnd { get; set; }
