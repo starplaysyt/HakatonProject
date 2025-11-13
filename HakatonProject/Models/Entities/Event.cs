@@ -9,5 +9,6 @@ public class Event : IEntity
     public string Description { get; set; }
 
     public Place Place { get; set; }
+
     public User Owner { get; set; }
 }
