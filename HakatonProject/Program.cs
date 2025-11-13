@@ -37,6 +37,13 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dataDb = scope.ServiceProvider.GetRequiredService<ApplicationDataDbContext>();
+    dataDb.Database.EnsureCreated();
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

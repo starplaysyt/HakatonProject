@@ -19,11 +19,36 @@ public class ApplicationDataDbContext : DbContext
     {
         _logger = logger;
         
-        if (!Database.EnsureCreated())
-        {
-            _logger.LogError("Database ensured already created.");
-        }
-        
         _logger.LogTrace("ApplicationDataDbContext created.");
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Interests)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Events)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Contacts)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.UserFaculty)
+            .WithMany()
+            .OnDelete(DeleteBehavior.SetNull);
+        
+        modelBuilder.Entity<Event>()
+            .HasMany(u => u.Visitors)
+            .WithOne()
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }
