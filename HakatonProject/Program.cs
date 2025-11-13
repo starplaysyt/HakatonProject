@@ -1,5 +1,6 @@
 using System.Text;
 using HakatonProject.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,33 +35,12 @@ builder.Services.AddDbContext<ApplicationDataDbContext>(options => options.UseSq
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services
-    .AddAuthentication(options =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
     {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(_universalKey)
-        };
-        
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                if (context.Request.Cookies.ContainsKey("jwt"))
-                    context.Token = context.Request.Cookies["jwt"];
-
-                return Task.CompletedTask;
-            }
-        };
+        options.LoginPath = "/Home/login";   // куда редиректить, если не авторизован
+        options.AccessDeniedPath = "/Home/denied"; // при запрещённом доступе
+        options.ExpireTimeSpan = TimeSpan.FromHours(6);
     });
 
 builder.Services.AddAuthorization();

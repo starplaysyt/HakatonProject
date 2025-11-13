@@ -6,26 +6,17 @@
 
 <form asp-controller="User" asp-action="Login" method="post" class="login-form">
     <div>
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" name="username" class="form-control" required />
+        <label for="username">Логин</label>
+        <input type="text" id="username" name="username" required />
     </div>
-
     <div>
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" class="form-control" required />
+        <input type="password" id="password" name="password" required />
     </div>
-
-    <button type="submit" class="btn btn-primary mt-2">Войти</button>
+    <button type="submit">Войти</button>
 
     @if (ViewBag.Error != null)
     {
-        <p class="text-danger mt-2">@ViewBag.Error</p>
+        <p style="color:red;">@ViewBag.Error</p>
     }
 </form>
-
-<style>
-    .login-form {
-        max-width: 350px;
-        margin: 50px auto;
-    }
-</style>

@@ -5,6 +5,8 @@ using System.Text.Json;
 using HakatonProject.Data;
 using HakatonProject.Models;
 using HakatonProject.Models.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -36,26 +38,22 @@ public class UserController(ApplicationDataDbContext context) : Controller
             new Claim("userId", user.Id.ToString())
         };
 
-        var key = new SymmetricSecurityKey(_universalKey);
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(
-            claims: claims,
-            expires: DateTime.Now.AddHours(2),
-            signingCredentials: creds);
+        var claimsIdentity = new ClaimsIdentity(
+            claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-        
-        
-        Response.Cookies.Append("jwt", tokenString, new CookieOptions
+        var authProperties = new AuthenticationProperties
         {
-            HttpOnly = true, 
-            Secure = true,   
-            SameSite = SameSiteMode.Strict,
-            Expires = DateTimeOffset.UtcNow.AddHours(2)
-        });
-        
+            IsPersistent = true, 
+            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(6)
+        };
 
-        return Ok(tokenString);
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            authProperties);
+
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPost("register")]
@@ -86,7 +84,14 @@ public class UserController(ApplicationDataDbContext context) : Controller
         
         var res = userRepository.AddUser(user);
 
-        return Ok();
+        return RedirectToAction("Index", "Home");
+    }
+    
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Login");
     }
     
     [HttpGet("{username}")]
