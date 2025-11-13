@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using HakatonProject.Controllers.DTOs;
 using HakatonProject.Data;
 using HakatonProject.Models;
 using HakatonProject.Models.Repositories;
@@ -52,8 +53,8 @@ public class UserController(ApplicationDataDbContext context) : Controller
             CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
-
-        return RedirectToAction("Index", "Home");
+        
+        return Json(new LoginResultDTO {UserId = user.Id.ToString(), UserName = user.Login, UserRole = user.UserGroup});
     }
 
     [HttpPost("register")]
@@ -64,7 +65,7 @@ public class UserController(ApplicationDataDbContext context) : Controller
         [FromForm] long facultyId,
         [FromForm] string userGroup)
     {
-        if (userGroup is not "Owner" or "User") return UnprocessableEntity("Invalid UserGroup");
+        if (userGroup is not ("Owner" or "User")) return UnprocessableEntity("Invalid UserGroup");
 
         if (await userRepository.GetUser(username) is not null) return UnprocessableEntity("Username occupied");
         
