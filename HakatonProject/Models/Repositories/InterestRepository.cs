@@ -1,4 +1,5 @@
 using HakatonProject.Data;
+using HakatonProject.Data.Migrations;
 using HakatonProject.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,4 +20,10 @@ public class InterestRepository
 
     public async Task<Interest?> GetInterestByName(string name) =>
         await _dbContext.Interests.FirstOrDefaultAsync(x => x.Name == name);
+
+    public async Task CreateInterest(Interest interest)
+    {
+        await _dbContext.Interests.AddAsync(interest);
+        await _dbContext.SaveChangesAsync();
+    }
 }
