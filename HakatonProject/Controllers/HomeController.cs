@@ -34,4 +34,24 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    public IActionResult Login()
+    {
+        return View();
+    }
+    
+    public async Task<IActionResult> Register()
+    {
+        // если нужно показать список факультетов — подгружаем
+        _context.Faculties.Add(new Faculty()
+        {
+            Name = "testfacultity",
+            Description = "testfacultity description"
+        });
+        
+        await _context.SaveChangesAsync();
+        
+        ViewBag.Faculties = await _context.Faculties.ToListAsync();
+        return View();
+    }
 }

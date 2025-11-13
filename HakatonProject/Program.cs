@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-var _universalKey = "AKJS-189A-1293-KLZQ"u8.ToArray();
+var _universalKey = "AKJS-189A-1293-KLZQJAHSDJHAJSHHHJZHXKCKHKZXHKCHK"u8.ToArray();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +35,11 @@ builder.Services.AddDbContext<ApplicationDataDbContext>(options => options.UseSq
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -44,7 +48,18 @@ builder.Services
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(_universalKey),
+            IssuerSigningKey = new SymmetricSecurityKey(_universalKey)
+        };
+        
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (context.Request.Cookies.ContainsKey("jwt"))
+                    context.Token = context.Request.Cookies["jwt"];
+
+                return Task.CompletedTask;
+            }
         };
     });
 

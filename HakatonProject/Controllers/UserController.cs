@@ -13,15 +13,17 @@ using Microsoft.IdentityModel.Tokens;
 [Route("api/[controller]")]
 public class UserController(ApplicationDataDbContext context) : Controller
 {
-    private static byte[] _universalKey = "AKJS-189A-1293-KLZQ"u8.ToArray();
+    private static byte[] _universalKey = "AKJS-189A-1293-KLZQJAHSDJHAJSHHHJZHXKCKHKZXHKCHK"u8.ToArray();
     
     private readonly UserRepository userRepository = new UserRepository(context);
     
     private readonly FacultiesRepository facultyRepository = new FacultiesRepository(context);
     
-    [HttpPost("/login")]
-    public async Task<ActionResult> Login(string username, string password)
+    [HttpPost("login")]
+    public async Task<ActionResult> Login([FromForm] string username,
+        [FromForm] string password)
     {
+        Console.WriteLine("LOGIN ENTERED");
         //trying login as simple user
         var user = await userRepository.GetUser(username);
         
@@ -42,12 +44,27 @@ public class UserController(ApplicationDataDbContext context) : Controller
             signingCredentials: creds);
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        
+        
+        Response.Cookies.Append("jwt", tokenString, new CookieOptions
+        {
+            HttpOnly = true, 
+            Secure = true,   
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddHours(2)
+        });
+        
 
         return Ok(tokenString);
     }
 
-    [HttpPost("/register")]
-    public async Task<ActionResult> Register(string name, string username, string password, string job, long facultyId, string userGroup)
+    [HttpPost("register")]
+    public async Task<ActionResult> Register([FromForm] string name,
+        [FromForm] string username,
+        [FromForm] string password,
+        [FromForm] string job,
+        [FromForm] long facultyId,
+        [FromForm] string userGroup)
     {
         if (userGroup is not "Owner" or "User") return UnprocessableEntity("Invalid UserGroup");
 
