@@ -150,10 +150,10 @@ body {
 }
 
 .sample-cards {
-    display: flex;
+    display: inline-flex;
     gap: 20px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: nowrap;
 }
 
@@ -193,7 +193,7 @@ body {
 .welcome-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 /* Карточка "Статистика" */

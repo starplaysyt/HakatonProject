@@ -20,6 +20,8 @@
 
     <ItemGroup>
         <Folder Include="FrontendMigration\" />
+        <Folder Include="wwwroot\html\assets\" />
+        <Folder Include="wwwroot\html\styles\" />
     </ItemGroup>
 
 </Project>
