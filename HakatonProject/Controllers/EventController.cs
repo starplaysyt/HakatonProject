@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -28,7 +27,7 @@ public class EventController : ControllerBase
             await _eventRepository.CreateEvent(_event);
             return Ok();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
