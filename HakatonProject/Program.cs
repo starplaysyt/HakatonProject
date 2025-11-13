@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var _universalKey = "AKJS-189A-1293-KLZQJAHSDJHAJSHHHJZHXKCKHKZXHKCHK"u8.ToArray();
 
@@ -27,8 +28,6 @@ builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<FacultiesRepository>();
 builder.Services.AddScoped<InterestRepository>();
 builder.Services.AddScoped<PlaceRepository>();
-builder.Services.AddScoped<UserEventRepository>();
-builder.Services.AddScoped<UserInterestRepository>();
 builder.Services.AddScoped<UserRepository>();
 
 // Add services to the container.
@@ -59,6 +58,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -72,6 +76,11 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
 }
 else
 {
