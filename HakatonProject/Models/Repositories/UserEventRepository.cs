@@ -1,4 +1,5 @@
 ﻿using HakatonProject.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace HakatonProject.Models.Repositories;
 
@@ -13,15 +14,24 @@ public class UserEventRepository(ApplicationDataDbContext _dbContext)
 {
     private readonly ApplicationDataDbContext dbContext = _dbContext;
     
-    public UserEventRepositoryErrors TryGetUserEvents(out Event[] events, User user)
+    public async Task<Event[]> TryGetUserEvents(User user)
     {
-        events = dbContext.UserEvents.Where(ue => ue.User.Id == user.Id).Select(ue => ue.Event).ToArray();
-        return UserEventRepositoryErrors.None;
+        var events = await dbContext.UserEvents.Where(ue => ue.User.Id == user.Id).Select(ue => ue.Event).ToArrayAsync();
+        return events;
     }
     
-    private UserEventRepositoryErrors TryGetEventUsers(out User[] users, Event e)
+    private async Task<User[]> TryGetEventUsers(Event e)
     {
-        users = dbContext.UserEvents.Where(ue => ue.Event.Id == e.Id).Select(ue => ue.User).ToArray();
-        return UserEventRepositoryErrors.None;
+        var users = await dbContext.UserEvents.Where(ue => ue.Event.Id == e.Id).Select(ue => ue.User).ToArrayAsync();
+        return users;
     }
+
+    private async Task TryAddEvent(Event e, User user) => await dbContext.UserEvents.AddAsync(
+        new UserEvent
+        {
+            Event = e, User = user
+        }
+    );
+
+
 }
