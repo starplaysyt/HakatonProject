@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+   <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="logo">
+                Active Graph</div>
+            <ul class="sidebar-nav">
+                <li><a href="#"><span class="iconify" data-icon="mynaui:home"></span></a></li>
+                <li><a href="#"><span class="iconify" data-icon="material-symbols:interests-rounded"></span></i></a></li>
+                <li><a href="#"><span class="iconify" data-icon="material-symbols:event-note-rounded"></span></i></a></li>
+            </ul>
+            <div class="sidebar-profile">
+                <span class="iconify" data-icon="iconamoon:profile"></span>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            
+            <div class="widget welcome-card">
+                <div class="welcome-header">
+                    <div class="user-icon"><span class="iconify" data-icon="iconamoon:profile"></span></div>
+                    <h2>Привет, Андрей</h2>
+                </div>
+                <div class="sample-cards">
+                    <div class="sample-card">
+                       <span class="iconify" data-icon="mynaui:home"></span>
+                        <p>Home</p>
+                    </div>
+                    <div class="sample-card">
+                       <span class="iconify" data-icon="mynaui:home"></span>
+                        <p>Home</p>
+                    </div>
+                    <div class="sample-card">
+                       <span class="iconify" data-icon="mynaui:home"></span>
+                        <p>Home</p>
+                    </div>
+                </div>
+            </div>
+
+<div class="widget stats-card">
+    <div class="stats-header">
+        <h3>Статистика</h3>
+        <div class="date-range">
+            <button id="btn-date"><span class="iconify" data-icon="mdi:navigate-before"></span></button></i> 10.02-17.02 <button id="btn-date"><span class="iconify" data-icon="mdi:navigate-next"></span></button>
+        </div>
+    </div>
+    
+    <div class="chart-wrapper">
+        <canvas id="weekStatsChart"></canvas>
+    </div>
+</div>
+
+            <div class="widget events-card">
+                <div class="header-ec"><h3><span class="iconify" data-icon="material-symbols:event-note-rounded"></span> Мероприятия</h3></div>
+                <ul class="event-list">
+                    <li>
+                        <div class="event-icon"><span class="iconify" data-icon="fa7-solid:museum"></span></div>
+                        <div class="event-details">
+                            <strong>Культура</strong>
+                            <span>время начала-время конца</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="event-icon"><span class="iconify" data-icon="fluent:sport-16-filled"></span></div>
+                        <div class="event-details">
+                            <strong>Спорт</strong>
+                            <span>время начала-время конца</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="event-icon"><span class="iconify" data-icon="mdi:volunteer"></span></div>
+                        <div class="event-details">
+                            <strong>Волонтерство</strong>
+                            <span>время начала-время конца</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="event-icon"><span class="iconify" data-icon="material-symbols:science"></span></div>
+                        <div class="event-details">
+                            <strong>Наука</strong>
+                            <span>время начала-время конца</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="event-icon"><span class="iconify" data-icon="mdi:court-hammer"></span></div>
+                        <div class="event-details">
+                            <strong>Студ. самоуправ.</strong>
+                            <span>время начала-время конца</span>
+                        </div>
+                    </li>                                        
+                </ul>
+            </div>
+
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
