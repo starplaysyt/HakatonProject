@@ -53,7 +53,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/login";   // куда редиректить, если не авторизован
+        options.LoginPath = "/AuthPage";   // куда редиректить, если не авторизован
         options.AccessDeniedPath = "/Home/denied"; // при запрещённом доступе
         options.ExpireTimeSpan = TimeSpan.FromHours(6);
     });
