@@ -22,6 +22,7 @@
         <Folder Include="FrontendMigration\" />
         <Folder Include="wwwroot\html\assets\" />
         <Folder Include="wwwroot\html\styles\" />
+        <Folder Include="wwwroot\scripts\assets\" />
     </ItemGroup>
 
 </Project>
