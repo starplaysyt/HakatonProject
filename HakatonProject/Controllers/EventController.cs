@@ -48,7 +48,7 @@ public class EventController : ControllerBase
             if(userId == null)
                 return Unauthorized("User not authorized");
 
-            var user = await _userRepository.GetUser(userId.Value);
+            var user = await _userRepository.GetUser(userId.Value.ToString());
             if (user == null)
                 return BadRequest("User not found in database");
 

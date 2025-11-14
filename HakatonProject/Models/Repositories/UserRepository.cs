@@ -16,4 +16,14 @@ public class UserRepository(ApplicationDataDbContext _dbContext)
         await dbContext.Users.AddAsync(user);
         await dbContext.SaveChangesAsync();
     }
+
+    public string GetUserNameById(long id)
+    {
+        var user = dbContext.Users.FirstOrDefault(x => x.Id == id);
+
+        if(user == null)
+            return "Гость";
+
+        return user.Name;
+    }
 }

@@ -91,6 +91,7 @@ public class ChartDataController : Controller
         });
     }
     
+    [HttpGet]
     public async Task<IActionResult> GetOwnerEvents(long ownerId)
     {
         var events = await _eventRepository.GetUserEvents(ownerId);
