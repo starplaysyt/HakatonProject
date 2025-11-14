@@ -6,4 +6,6 @@ public class EventsPageController : Controller
     {
         return View();
     }
+    
+    public async Task<IActionResult> Create(string name, string description, DateTime start, DateTime end, )
 }
