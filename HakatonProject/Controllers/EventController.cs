@@ -34,9 +34,9 @@ public class EventController : ControllerBase
     [Route("user-events")]
     public async Task<ActionResult<Event[]>> GetUserEvents(long id)
     {
-        var _event = await _eventRepository.GetUserEvents(id);
+        var _events = await _eventRepository.GetUserEvents(id);
 
-        return Ok(_event);
+        return Ok(_events);
     }
 
 
