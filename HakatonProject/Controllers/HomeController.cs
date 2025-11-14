@@ -25,7 +25,6 @@ public class HomeController : Controller
     {
         if (User.Identity?.IsAuthenticated == true)
         {
-
             var username = User.Identity.Name;
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
             var userId = User.FindFirst("userId")?.Value;
@@ -48,7 +47,6 @@ public class HomeController : Controller
 
     public IActionResult Login()
     {
-        
         return View();
     }
     

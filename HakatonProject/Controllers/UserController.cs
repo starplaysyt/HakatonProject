@@ -76,12 +76,12 @@ public class UserController(ApplicationDataDbContext context, UserRepository usr
             Name = name,
             Login = username,
             Password = password,
-            //Job = job,
-            // UserFaculty = faculty,
-            // UserGroup = userGroup
+            Job = "Job",
+            UserFaculty = new Faculty(),
+            UserGroup = "User"
         };
         
-        var res = userRepository.AddUser(user);
+        await userRepository.AddUser(user);
 
         return RedirectToAction("Index", "Home");
     }
