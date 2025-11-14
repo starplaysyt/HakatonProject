@@ -63,7 +63,7 @@
 
                 <script>
                     // Получаем данные с бэкенда через fetch
-                    fetch('/api/ChartData')
+                    fetch('/api/ChartData/owner-events')
                         .then(response => response.json())
                         .then(chartData => {
                             const ctx = document.getElementById('weekStatsChart').getContext('2d');

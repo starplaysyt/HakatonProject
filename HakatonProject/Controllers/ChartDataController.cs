@@ -15,11 +15,11 @@ public class ChartDataController : Controller
         _eventRepository = eventRepository;
     }
 
-    // GET
+    /*[HttpGet]
     public IActionResult Index()
     {
         return View();
-    }
+    }*/
 
     [HttpGet]
     public IActionResult Get()
@@ -54,6 +54,7 @@ public class ChartDataController : Controller
     }
 
     [HttpGet]
+    [Route("owner-events")]
     public async Task<IActionResult> GetOwnerEvents(long ownerId)
     {
         var events = await _eventRepository.GetOwnerEvents(ownerId);

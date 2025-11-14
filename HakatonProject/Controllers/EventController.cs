@@ -3,6 +3,7 @@ using HakatonProject.Models;
 using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,10 +24,18 @@ public class EventController : ControllerBase
     }
 
     [HttpGet("list")]
-    public ActionResult<List<Event>> GetEventList()
+    public async Task<ActionResult<List<Event>>> GetEventList()
     {
         var events = _eventRepository.GetEvents();
         return Ok(events);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<Event>> GetEvent(long id)
+    {
+        var _event = await _eventRepository.TryGetEvent(id);
+
+        return Ok(_event);
     }
 
 
