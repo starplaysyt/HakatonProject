@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои интересы | Active Graph</title>
-    
-    <link rel="stylesheet" href="~/styles/style.css">
-    
+    <title>Аналитика</title>
+    <link rel="stylesheet" href="../styles/style.css">
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        .widget {
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-<div class="dashboard-container">
+    <div class="dashboard-container">
         <nav class="sidebar">
             <div class="sidebar-logo">
                 <img src="../assets/logo.png" alt="logo">
@@ -30,22 +35,20 @@
         </nav>
 
         <main class="main-content">
-
-            <div class="widget events-card" style="grid-column: 1 / -1; min-height: 85vh; display: flex; flex-direction: column;">
-    
-                <div class="header-ec">
-                    <h3><span class="iconify" data-icon="material-symbols:interests-rounded"></span> Мои интересы</h3>
-                </div>
             
-                <div id="interest-cards-wrapper" class="interest-card-wrapper">
-                    <!-- Интересы будут загружены через JavaScript -->
+            <div class="widget stats-card" style="grid-column: 1 / -1; min-height: 85vh;">
+                <div class="header-ec">
+                    <h3><span class="iconify" data-icon="material-symbols:interests-rounded"></span> Аналитика</h3>
+                </div>
+                
+                <div class="chart-wrapper" style="min-height: 400px; height: 75vh;">
+                    <canvas id="barChart"></canvas>
                 </div>
             </div>
 
         </main>
     </div>
-    
 
-    <script src="~/scripts/Interes.js"></script>
+<script src="../scripts/Analytics.js"></script>
 </body>
 </html>
