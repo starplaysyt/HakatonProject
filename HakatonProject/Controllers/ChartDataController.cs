@@ -22,39 +22,75 @@ public class ChartDataController : Controller
     }*/
 
     [HttpGet]
+    [Route("owner-events")]
     public IActionResult Get()
     {
         var data = new
         {
-            labels = new[] { "Январь", "Февраль", "Март" },
+            labels = new[] {"ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"},
             datasets = new[]
             {
+                // {
+                //     label: 'Morning',
+                //     data: [3],    // высота блока
+                //     backgroundColor: '#82D1B3',
+                //     stack: 'week'
+                // },
+                // {
+                //     label: 'Day',
+                //     data: [5],
+                //     backgroundColor: '#D9B884',
+                //     stack: 'week'
+                // },
+                // {
+                //     label: 'Evening',
+                //     data: [2],
+                //     backgroundColor: '#D19282',
+                //     stack: 'week'
+                // }
                 new
                 {
-                    label = "Продажи 2024",
-                    data = new[] { 10, 20, 30 },
-                    backgroundColor = "rgba(75, 192, 192, 0.5)"
+                    label = "Morning",
+                    data = new[] {3},
+                    backgroundColor = "#D9B84",
+                    stack = "week"
                 },
-                new
-                {
-                    label = "Продажи 2025",
-                    data = new[] { 15, 25, 35 },
-                    backgroundColor = "rgba(255, 99, 132, 0.5)"
-                },
-                new
-                {
-                    label = "Продажи 2026",
-                    data = new[] { 20, 15, 25 },
-                    backgroundColor = "rgba(255, 206, 86, 0.5)"
-                }
+                // new
+                // {
+                //     label = "Активность",
+                //
+                //     // Массив массивов (float[][])
+                //     data = new float?[][]
+                //     {
+                //         new float?[] { 18f, 19.5f },   // ПН
+                //         new float?[] { 13f, 15f },     // ВТ
+                //         new float?[] { 16.5f, 18.5f }, // СР
+                //         new float?[] { 10f, 13f },     // ЧТ
+                //         new float?[] { 14f, 17f },     // ПТ
+                //         new float?[] { 10.5f, 15f },   // СБ
+                //         null                           // ВС
+                //     },
+                //
+                //     backgroundColor = new[]
+                //     {
+                //         "#82D1B3",
+                //         "#D9B884",
+                //         "#D19282",
+                //         "#B38FDB",
+                //         "#82D19A",
+                //         "#D7D789",
+                //         "transparent"
+                //     },
+                //
+                //     borderRadius = 8,
+                //     borderSkipped = false
+                // }
             }
         };
 
         return Ok(data); // JSON для Chart.js
     }
-
-    [HttpGet]
-    [Route("owner-events")]
+    
     public async Task<IActionResult> GetOwnerEvents(long ownerId)
     {
         var events = await _eventRepository.GetUserEvents(ownerId);

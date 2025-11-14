@@ -9,6 +9,79 @@
     };
 }
 
+@section Scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Получаем данные с бэкенда через fetch
+            fetch('/api/ChartData/owner-events')
+                .then(response => response.json())
+                .then(chartData => {
+                    const ctx = document.getElementById('weekStatsChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false, // Позволяет графику заполнить контейнер
+
+                            // Отключаем легенду (кружок с надписью "Активность")
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    enabled: false // Отключаем подсказки при наведении
+                                }
+                            },
+                            indexAxis: 'x',
+                            // Настройка осей
+                            scales: {
+                                // Ось X (Дни недели)
+                                x: {
+                                    position: 'top', // Метки 'ПН', 'ВТ' будут сверху
+                                    grid: {
+                                        display: false // Убираем вертикальные линии сетки
+                                    },
+                                    border: {
+                                        display: false // Убираем саму ось X
+                                    },
+                                    ticks: {
+                                        color: '#E0E0E0' // Цвет текста меток
+                                    },
+                                    stacked: false
+                                },
+                                // Ось Y (Время)
+                                y: {
+                                    min: 10,  // Начинаем с 10:00
+                                    max: 20,  // Заканчиваем в 20:00
+                                    grid: {
+                                        color: '#4A4C60', // Цвет горизонтальных линий сетки
+                                        drawTicks: false // Убираем "засечки" на оси
+                                    },
+                                    border: {
+                                        display: false // Убираем саму ось Y
+                                    },
+                                    ticks: {
+                                        color: '#E0E0E0', // Цвет текста (10:00, 12:00...)
+                                        stepSize: 2, // Шаг в 2 часа
+                                        // Форматируем метки, чтобы было "10:00", а не "10"
+                                        callback: function (value, index, ticks) {
+                                            return value + ':00';
+                                        },
+                                        padding: 10 // Отступ меток от края
+                                    },
+                                    stacked: false
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Ошибка при загрузке данных для Chart.js:', error));
+        });
+                </script>
+}
+
 <div class="dashboard-container">
     <nav class="sidebar">
         <div class="sidebar-logo">
@@ -61,30 +134,7 @@
             <div class="chart-wrapper">
                 <canvas id="weekStatsChart"></canvas>
 
-                <script>
-                    // Получаем данные с бэкенда через fetch
-                    fetch('/api/ChartData/owner-events')
-                        .then(response => response.json())
-                        .then(chartData => {
-                            const ctx = document.getElementById('weekStatsChart').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'bar',
-                                data: chartData,
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {position: 'top'}
-                                    },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                        })
-                        .catch(error => console.error('Ошибка при загрузке данных для Chart.js:', error));
-                </script>
+                
             </div>
         </div>
 
