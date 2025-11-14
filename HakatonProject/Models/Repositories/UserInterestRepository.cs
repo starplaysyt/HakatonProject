@@ -11,11 +11,16 @@ public class UserInterestRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Interest?> GetInterestByUser(User user)
+    public async Task<Interest[]> GetInterestsByUserId(long id)
     {
-        UserInterest? userInterest = await _dbContext.UserInterests.FirstOrDefaultAsync(x => x.User == user);
+        var result = 
+            await _dbContext
+                .UserInterests
+                .Where(it => it.User.Id == id)
+                .Select(ui => ui.Interest)
+                .ToArrayAsync();
 
-        return userInterest.Interest ?? throw new Exception($"No interest with user: {user}");
+        return result ?? throw new Exception($"No interest with user: {id}");
     } 
 
     public async Task<User?> GetUserByInterest(Interest interest)
