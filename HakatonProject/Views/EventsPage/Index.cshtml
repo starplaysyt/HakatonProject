@@ -54,10 +54,10 @@
                             </div>
 
                             <div class="image-upload-controls">
-                                <input type="file" id="eventImage" accept="image/*" style="display: none;">
+                                <input name="eventImage" type="file" id="eventImage" accept="image/*" style="display: none;">
 
                                 <label for="eventImage" class="event-button file-upload-button">
-                                    <span class="iconify" data-icon="material-symbols:upload-file"></span>
+                                    <span name="" class="iconify" data-icon="material-symbols:upload-file"></span>
                                     Выбрать файл...
                                 </label>
 
@@ -67,24 +67,24 @@
                         <div class="event-detail-info">
                             <div class="input-group">
                                 <label for="nameEvent">Название мероприятия</label>
-                                <input type="text" id="nameEvent" class="styled-input" placeholder="Хакатон">
+                                <input name="nameEvent" type="text" id="nameEvent" class="styled-input" placeholder="Хакатон">
                             </div>
                             <div class="input-group">
                                 <label for="description">Описание</label>
-                                <textarea id="description" class="styled-textarea"
+                                <input name="description" type="text" id="description" class="styled-textarea"
                                           placeholder="это мероприятие, на котором команды специалистов в области IT (программисты, дизайнеры, менеджеры) за ограниченное время решают поставленную задачу, создавая прототип продукта или решение конкретной проблемы."
-                                          rows="6"></textarea>
+                                          rows="6">
                             </div>
                             <div class="input-time">
 
                                 <div class="input-group">
                                     <label for="startTime">Начало мероприятия</label>
-                                    <input type="time" id="startTime" class="styled-input styled-time" value="10:30">
+                                    <input name="startTime" type="time" id="startTime" class="styled-input styled-time" value="10:30">
                                 </div>
 
                                 <div class="input-group">
                                     <label for="endTime">Конец мероприятия</label>
-                                    <input type="time" id="endTime" class="styled-input styled-time" value="17:30">
+                                    <input name="endTime" type="time" id="endTime" class="styled-input styled-time" value="17:30">
                                 </div>
 
                             </div>

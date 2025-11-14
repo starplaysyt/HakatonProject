@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[controller]")]
 public class EventsPageController(EventRepository repo) : Controller
 {
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
