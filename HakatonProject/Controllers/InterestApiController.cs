@@ -25,4 +25,13 @@ public class InterestApiController(InterestRepository interestRepo, EventReposit
     {
         return Ok(_userInterestRepository.GetInterestsByUserId(userId));
     }
+
+    [HttpGet]
+    [Route("list")]
+    public async Task<IActionResult> GetAllInterests()
+    {
+        var interests = await InterestRepo.GetAllInterests();
+
+        return Ok(interests);
+    }
 }
