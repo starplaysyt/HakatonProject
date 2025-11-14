@@ -23,27 +23,27 @@
                 <button class="tab-button" data-tab="register">Регистрация</button>
             </div>
 
-            <form id="login-form" class="auth-form active">
+            <form asp-controller="User" asp-action="Login" method="post" class="auth-form active">
                 <div class="logo-area">
                     <img src="assets/logo.png" alt="logo">
                     <p class="logo-text">Active Graph</p>
                 </div>
                 
                 <div class="input-group">
-                    <label for="login-email">Email или Логин</label>
-                    <input type="text" id="login-email" class="styled-input" placeholder="Введите ваш email или логин" required>
+                    <label for="username">Email или Логин</label>
+                    <input name="username" type="text" id="username" class="styled-input" placeholder="Введите ваш email или логин" required>
                 </div>
 
                 <div class="input-group">
-                    <label for="login-password">Пароль</label>
-                    <input type="password" id="login-password" class="styled-input" placeholder="Введите пароль" required>
+                    <label for="password">Пароль</label>
+                    <input name="password" type="password" id="password" class="styled-input" placeholder="Введите пароль" required>
                 </div>
 
                 <button type="submit" class="event-button" style="width: 100%;">Войти</button>
                 <a href="#" class="forgot-password">Забыли пароль?</a>
             </form>
 
-            <form id="register-form" class="auth-form hidden">
+            <form asp-action="Register" asp-controller="User" id="register-form" class="auth-form hidden">
                 <div class="logo-area">
                     <img src="assets/logo.png" alt="logo">
                     <p class="logo-text">Active Graph</p>
@@ -51,17 +51,17 @@
                 
                 <div class="input-group">
                     <label for="register-name">Имя</label>
-                    <input type="text" id="register-name" class="styled-input" placeholder="Андрей" required>
+                    <input name="name" type="text" id="register-name" class="styled-input" placeholder="Андрей" required>
                 </div>
 
                 <div class="input-group">
                     <label for="register-email">Email</label>
-                    <input type="email" id="register-email" class="styled-input" placeholder="example@university.com" required>
+                    <input name="username" type="email" id="register-email" class="styled-input" placeholder="example@university.com" required>
                 </div>
                 
                 <div class="input-group">
                     <label for="register-password">Пароль</label>
-                    <input type="password" id="register-password" class="styled-input" placeholder="Придумайте пароль" required>
+                    <input name="password" type="password" id="register-password" class="styled-input" placeholder="Придумайте пароль" required>
                 </div>
                 
                 <div class="input-group">

@@ -13,4 +13,6 @@ public class Event : IEntity
     public User Owner { get; set; }
     
     public Interest Interest { get; set; }
+    
+    public string ImagePath { get; set; }
 }

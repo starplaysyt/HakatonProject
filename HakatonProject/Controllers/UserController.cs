@@ -54,33 +54,31 @@ public class UserController(ApplicationDataDbContext context, UserRepository usr
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
         
-        return Json(new LoginResultDTO {UserId = user.Id.ToString(), UserName = user.Login, UserRole = user.UserGroup});
+        return RedirectToAction("Index", "Home");
+        //return Json(new LoginResultDTO {UserId = user.Id.ToString(), UserName = user.Login, UserRole = user.UserGroup});
     }
 
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromForm] string name,
         [FromForm] string username,
-        [FromForm] string password,
-        [FromForm] string job,
-        [FromForm] long facultyId,
-        [FromForm] string userGroup)
+        [FromForm] string password)
     {
-        if (userGroup is not ("Owner" or "User")) return UnprocessableEntity("Invalid UserGroup");
+        //if (userGroup is not ("Owner" or "User")) return UnprocessableEntity("Invalid UserGroup");
 
         if (await userRepository.GetUser(username) is not null) return UnprocessableEntity("Username occupied");
         
-        var faculty = await facultyRepository.GetFacultyById(facultyId);
+        //var faculty = await facultyRepository.GetFacultyById(facultyId);
         
-        if (faculty is null) return UnprocessableEntity("Faculty Id is invalid");
+        //if (faculty is null) return UnprocessableEntity("Faculty Id is invalid");
         
         var user = new User()
         {
             Name = name,
             Login = username,
             Password = password,
-            Job = job,
-            UserFaculty = faculty,
-            UserGroup = userGroup
+            //Job = job,
+            // UserFaculty = faculty,
+            // UserGroup = userGroup
         };
         
         var res = userRepository.AddUser(user);

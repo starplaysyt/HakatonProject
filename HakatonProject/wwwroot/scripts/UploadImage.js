@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const imageUploadInput = document.getElementById("event-image-upload");
+    const imageUploadInput = document.getElementById("eventImage");
     const imagePreviewBox = document.getElementById("image-preview-box");
     const fileNameDisplay = document.getElementById("file-name-display");
 

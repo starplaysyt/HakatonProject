@@ -46,7 +46,7 @@
 
             <div class="events-card-content">
 
-                <form asp-action="">
+                <form asp-action="CreateEvent" asp-controller="EventsPage" method="post" enctype="multipart/form-data">
                     <div class="event-detail-card">
                         <div class="event-detail-image" id="image-preview-container">
 
@@ -54,9 +54,9 @@
                             </div>
 
                             <div class="image-upload-controls">
-                                <input type="file" id="event-image-upload" accept="image/*" style="display: none;">
+                                <input type="file" id="eventImage" accept="image/*" style="display: none;">
 
-                                <label for="event-image-upload" class="event-button file-upload-button">
+                                <label for="eventImage" class="event-button file-upload-button">
                                     <span class="iconify" data-icon="material-symbols:upload-file"></span>
                                     Выбрать файл...
                                 </label>
@@ -66,29 +66,29 @@
                         </div>
                         <div class="event-detail-info">
                             <div class="input-group">
-                                <label for="Name-Event">Название мероприятия</label>
-                                <input type="text" id="Name-Event" class="styled-input" placeholder="Хакатон">
+                                <label for="nameEvent">Название мероприятия</label>
+                                <input type="text" id="nameEvent" class="styled-input" placeholder="Хакатон">
                             </div>
                             <div class="input-group">
-                                <label for="sample-textarea">Описание</label>
-                                <textarea id="sample-textarea" class="styled-textarea"
+                                <label for="description">Описание</label>
+                                <textarea id="description" class="styled-textarea"
                                           placeholder="это мероприятие, на котором команды специалистов в области IT (программисты, дизайнеры, менеджеры) за ограниченное время решают поставленную задачу, создавая прототип продукта или решение конкретной проблемы."
                                           rows="6"></textarea>
                             </div>
                             <div class="input-time">
 
                                 <div class="input-group">
-                                    <label for="sample-time">Начало мероприятия</label>
-                                    <input type="time" id="sample-time" class="styled-input styled-time" value="10:30">
+                                    <label for="startTime">Начало мероприятия</label>
+                                    <input type="time" id="startTime" class="styled-input styled-time" value="10:30">
                                 </div>
 
                                 <div class="input-group">
-                                    <label for="sample-time">Конец мероприятия</label>
-                                    <input type="time" id="sample-time" class="styled-input styled-time" value="17:30">
+                                    <label for="endTime">Конец мероприятия</label>
+                                    <input type="time" id="endTime" class="styled-input styled-time" value="17:30">
                                 </div>
 
                             </div>
-                            <button class="event-button">Создать мероприятие</button>
+                            <button type="submit" class="event-button">Создать мероприятие</button>
                         </div>
                     </div>
                 </form>
