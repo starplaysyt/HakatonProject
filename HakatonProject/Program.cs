@@ -20,8 +20,12 @@ var loggerFactory = LoggerFactory.Create(logging =>
 
 var globalLogger = loggerFactory.CreateLogger("Global"); //Глобальный логгер, для вывода юзаем имено его
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSingleton(loggerFactory);
 builder.Services.AddSingleton(globalLogger);
+
+builder.Services.AddScoped<CurrentUserService>();
 
 builder.Services.AddScoped<EventRepository>();
 builder.Services.AddScoped<ContactRepository>();

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using HakatonProject.Models;
 using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,11 +12,14 @@ public class EventController : ControllerBase
     private readonly PlaceRepository _placeRepository;
     private readonly UserRepository _userRepository;
 
-    public EventController(EventRepository eventRepository, UserRepository userRepository, PlaceRepository placeRepository)
+    private readonly CurrentUserService _currentUserService;
+
+    public EventController(EventRepository eventRepository, UserRepository userRepository, CurrentUserService currentUserService, PlaceRepository placeRepository)
     {
         _eventRepository = eventRepository;
         _placeRepository = placeRepository;
         _userRepository = userRepository;
+        _currentUserService = currentUserService;
     }
 
     [HttpGet("list")]
@@ -30,14 +34,11 @@ public class EventController : ControllerBase
     public async Task<ActionResult> CreateEvent(CreateEventDTO dto)
     {
         try{
-            var userIdClaim = User.FindFirst("userId")?.Value;
-            if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized("User not authenticated");
+            var userId = _currentUserService.GetCurrentUserId();
+            if(userId == null)
+                return Unauthorized("User not authorized");
 
-            if (!int.TryParse(userIdClaim, out int userId))
-                return BadRequest("Invalid user ID format");
-
-            var user = await _userRepository.GetUser(userId);
+            var user = await _userRepository.GetUser(userId.Value);
             if (user == null)
                 return BadRequest("User not found in database");
 

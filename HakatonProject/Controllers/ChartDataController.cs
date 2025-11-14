@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HakatonProject.Controllers;
 
@@ -6,6 +8,13 @@ namespace HakatonProject.Controllers;
 [Route("api/[controller]")]
 public class ChartDataController : Controller
 {
+    private readonly EventRepository _eventRepository;
+
+    public ChartDataController(EventRepository eventRepository)
+    {
+        _eventRepository = eventRepository;
+    }
+
     // GET
     public IActionResult Index()
     {
@@ -42,5 +51,13 @@ public class ChartDataController : Controller
         };
 
         return Ok(data); // JSON для Chart.js
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetOwnerEvents(long ownerId)
+    {
+        var events = await _eventRepository.GetOwnerEvents(ownerId);
+
+        return Ok(events);
     }
 }
