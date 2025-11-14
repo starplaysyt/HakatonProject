@@ -1,5 +1,12 @@
-﻿@{
+﻿@model dynamic  // или создай нормальную ViewModel
+@using HakatonProject.Models.Repositories
+@inject CurrentUserService CurrentUserService
+@inject UserRepository UserRepository
+
+@{
     ViewData["Title"] = "Home Page";
+
+    string userName = CurrentUserService.GetCurrentUserName();
 
     var events = new[]
     {
@@ -96,21 +103,27 @@
         <div class="widget welcome-card">
             <div class="welcome-header">
                 <div class="user-icon"><span class="iconify" data-icon="iconamoon:profile"></span></div>
-                <h2>Привет, Андрей</h2>
+                <h2>Привет, @userName</h2>
             </div>
             <div class="sample-cards">
-                <div class="sample-card">
-                    <span class="iconify" data-icon="mynaui:home"></span>
-                    <p>Home</p>
-                </div>
-                <div class="sample-card">
-                    <span class="iconify" data-icon="mynaui:home"></span>
-                    <p>Home</p>
-                </div>
-                <div class="sample-card">
-                    <span class="iconify" data-icon="mynaui:home"></span>
-                    <p>Home</p>
-                </div>
+                <a href="/" style="text-decoration: none; color: inherit;">
+                    <div class="sample-card">
+                        <span class="iconify" data-icon="mynaui:home"></span>
+                        <p>Главная</p>
+                    </div>
+                </a>
+                <a href="/Interest" style="text-decoration: none; color: inherit;">
+                    <div class="sample-card">
+                        <span class="iconify" data-icon="material-symbols:interests-rounded"></span>
+                        <p>Интересы</p>
+                    </div>
+                </a>
+                <a href="/EventsPage" style="text-decoration: none; color: inherit;">
+                    <div class="sample-card">
+                        <span class="iconify" data-icon="material-symbols:event-note-rounded"></span>
+                        <p>Мероприятия</p>
+                    </div>
+                </a>
             </div>
         </div>
 
