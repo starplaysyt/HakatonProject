@@ -1,12 +1,19 @@
-
-
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-public class InterestController : Controller
+namespace HakatonProject.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class InterestController(UserInterestRepository repo) : Controller
 {
-    public IActionResult Index()
+    private readonly UserInterestRepository _repo = repo;
+
+    [HttpGet]
+    [Route("get-interests")]
+    public async Task<IActionResult> GetInterestsByUser(long userId)
     {
-        return View();
-    } 
+        return Ok(_repo.GetInterestsByUserId(userId));
+    }
+    
+    
 }
