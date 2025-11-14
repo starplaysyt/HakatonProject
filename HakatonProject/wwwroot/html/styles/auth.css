@@ -1,6 +1,4 @@
-/* auth.css - Стили ТОЛЬКО для страницы Входа */
 
-/* Центрируем все на странице */
 body {
     display: flex;
     justify-content: center;
@@ -9,39 +7,35 @@ body {
     padding: 20px;
 }
 
-/* Контейнер для формы. Мы будем использовать класс .widget + .auth-card */
 .auth-card {
     width: 100%;
     width: 420px;
-    /* Анимация появления из style.css */
     opacity: 0;
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
-/* Логотип */
+
 .logo-area {
     text-align: center;
     margin-bottom: 25px;
 }
 
-/* Стилизуем наш Iconify */
 .logo-icon {
     font-size: 52px;
-    color: #E0E0E0; /* Наш основной цвет текста */
+    color: #E0E0E0;
 }
 
 .logo-text {
     font-size: 14px;
-    color: #8B8DA0; /* Наш вторичный цвет текста */
+    color: #8B8DA0;
     margin-top: 5px;
     font-weight: 600;
 }
 
-/* Переключатель Вход/Регистрация */
 .auth-tabs {
     display: flex;
-    background-color: #4A4C60; /* Наш "внутренний" фон карточки */
-    border-radius: 15px; /* Наш радиус */
+    background-color: #4A4C60;
+    border-radius: 15px;
     padding: 5px;
     margin-bottom: 30px;
 }
@@ -51,9 +45,9 @@ body {
     padding: 10px 15px;
     border: none;
     background-color: transparent;
-    color: #8B8DA0; /* Вторичный текст */
+    color: #8B8DA0;
     font-size: 16px;
-    font-family: "Nunito", sans-serif; /* Наш шрифт */
+    font-family: "Nunito", sans-serif;
     font-weight: 600;
     cursor: pointer;
     border-radius: 12px;
@@ -61,20 +55,17 @@ body {
 }
 
 .tab-button.active {
-    /* Градиент, как у иконки юзера в сайдбаре */
     background: linear-gradient(180deg, #545871 0%, #484355 100%); 
     color: #FFFFFF;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Скрытая форма */
 .auth-form.hidden {
     display: none;
 }
 
-/* Ссылка "Забыли пароль" */
 .forgot-password {
-    display: block; /* Делаем блочным для центрирования */
+    display: block;
     text-align: center;
     font-size: 14px;
     color: #8B8DA0;
@@ -92,4 +83,68 @@ body {
     height: 64px;
     object-fit: contain;
 
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    color: #E0E0E0;
+    padding-bottom: 15px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    display: none;
+}
+.custom-checkbox .checkbox-visual {
+    width: 20px;
+    height: 20px;
+    background-color: #4A4C60;
+    border-radius: 6px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox .checkbox-visual .fa-check {
+    font-size: 12px;
+    color: #FFFFFF;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-visual {
+    background-color: #B38FDB; 
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-visual .fa-check {
+    opacity: 1;
+    transform: scale(1);
+}
+.custom-checkbox:hover .checkbox-visual {
+    box-shadow: 0 0 0 2px rgba(179, 143, 219, 0.5);
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #B38FDB; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.event-button:disabled {
+    background-color: #4A4C60; 
+    color: #8B8DA0;
+    cursor: not-allowed;
 }
