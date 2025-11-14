@@ -14,13 +14,13 @@ using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController(ApplicationDataDbContext context) : Controller
+public class UserController(ApplicationDataDbContext context, UserRepository usrRepo, FacultiesRepository facRepo) : Controller
 {
     private static byte[] _universalKey = "AKJS-189A-1293-KLZQJAHSDJHAJSHHHJZHXKCKHKZXHKCHK"u8.ToArray();
     
-    private readonly UserRepository userRepository = new UserRepository(context);
+    private readonly UserRepository userRepository = usrRepo;
     
-    private readonly FacultiesRepository facultyRepository = new FacultiesRepository(context);
+    private readonly FacultiesRepository facultyRepository = facRepo;
     
     [HttpPost("login")]
     public async Task<ActionResult> Login([FromForm] string username,

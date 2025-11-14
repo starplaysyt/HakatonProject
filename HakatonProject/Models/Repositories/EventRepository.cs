@@ -1,4 +1,5 @@
 using HakatonProject.Data;
+using HakatonProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -21,6 +22,9 @@ public class EventRepository(ApplicationDataDbContext dbContext)
         await dbContext.Events.AddAsync(_event);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task<Event[]> GetEvents(long interestId) => 
+        await dbContext.Events.Where(e => e.Interest.Id == interestId).ToArrayAsync();
 
     public async Task<EventTypeDTO[]> GetUserEvents(long ownerId)
     {

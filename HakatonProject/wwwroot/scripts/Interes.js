@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 'culture',
             title: 'Культура',
-            color: '../assets/i.webp',
+            color: 'var(--color-culture)',
             events: [
                 { title: 'Вечер акустической музыки', description: 'Уютный вечер в формате квартирника...', time: '19:30 - 21:30', image: 'https://placehold.co/700x700/D9D0A8/333?text=Музыка' },
                 { title: 'Экскурсия "Фонари улицы Гоголя"', description: 'Прогулка по знаменитой улице Гоголя...', time: '18:30 - 20:00', image: 'https://placehold.co/700x700/D9D0A8/333?text=Экскурсия' },
@@ -78,11 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div 
                     id="${item.id}"
                     class="interest-card"
-                    style="
-                        background: url('${item.color}');
-                        background-position: center;
-                        background-size: cover;
-                    ">
+                    style="background-color: ${item.color};">
                     <div class="expanded-content">
                         <button class="close-button">&times;</button>
                         <h2 class="expanded-title">${item.title}</h2>

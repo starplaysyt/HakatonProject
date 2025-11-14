@@ -11,4 +11,6 @@ public class Event : IEntity
     public Place Place { get; set; }
 
     public User Owner { get; set; }
+    
+    public Interest Interest { get; set; }
 }
