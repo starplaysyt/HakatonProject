@@ -1,4 +1,5 @@
 using System.Text;
+using HakatonProject.Controllers;
 using HakatonProject.Data;
 using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<FacultiesRepository>();
 builder.Services.AddScoped<InterestRepository>();
 builder.Services.AddScoped<PlaceRepository>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ChartDataController>();
 
 // Add services to the container.
 var connectionAuthString = builder.Configuration.GetConnectionString("AuthConnection") ??
