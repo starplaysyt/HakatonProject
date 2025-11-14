@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход / Регистрация | Active Graph</title>
     
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/auth.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,8 +68,13 @@
                     <label for="register-confirm-password">Подтвердите пароль</label>
                     <input type="password" id="register-confirm-password" class="styled-input" placeholder="Повторите пароль" required>
                 </div>
-                
-                <button type="submit" class="event-button" style="width: 100%;">Зарегистрироваться</button>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="termsCheckbox">
+                    <span class="checkbox-visual">
+                    </span>
+                    <span class="checkbox-label-text">Я согласен на обработку и защиту персональных данных.</span>
+                </label>
+                <button type="submit" id="submitButton" class="event-button" style="width: 100%;" disabled>Зарегистрироваться</button>
             </form>
         </div>
     </div>
@@ -99,6 +104,36 @@
                 });
             });
         });
+
+        
     </script>
+    <script>
+    // Ждем, пока вся страница (HTML) загрузится
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 1. Находим наши элементы по их ID
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const submitButton = document.getElementById('submitButton');
+
+        // 2. Вешаем "слушателя" на чекбокс, 
+        //    который сработает при каждом клике (событие 'change')
+        termsCheckbox.addEventListener('change', () => {
+            
+            // 3. Проверяем, нажат ли чекбокс
+            if (termsCheckbox.checked) {
+                // Если ДА - убираем атрибут 'disabled' у кнопки
+                submitButton.disabled = false;
+            } else {
+                // Если НЕТ - возвращаем атрибут 'disabled'
+                submitButton.disabled = true;
+            }
+
+            // --- Короткая версия того же кода ---
+            // submitButton.disabled = !termsCheckbox.checked;
+        });
+
+    });
+</script>
+
 </body>
 </html>
