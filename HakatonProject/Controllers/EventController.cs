@@ -31,9 +31,9 @@ public class EventController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<Event>> GetEvent(long id)
+    public async Task<ActionResult<Event>> GetUserEvents(long id)
     {
-        var _event = await _eventRepository.TryGetEvent(id);
+        var _event = await _eventRepository.GetUserEvents(id);
 
         return Ok(_event);
     }

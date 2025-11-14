@@ -22,7 +22,7 @@ public class EventRepository(ApplicationDataDbContext dbContext)
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<EventTypeDTO[]> GetOwnerEvents(long ownerId)
+    public async Task<EventTypeDTO[]> GetUserEvents(long ownerId)
     {
         var eventsList = await _dbContext.Events.Where(x => x.Owner.Id == ownerId).GroupBy(e => e.Type)
             .Select(g => new EventTypeDTO

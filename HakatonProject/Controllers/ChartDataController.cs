@@ -57,7 +57,7 @@ public class ChartDataController : Controller
     [Route("owner-events")]
     public async Task<IActionResult> GetOwnerEvents(long ownerId)
     {
-        var events = await _eventRepository.GetOwnerEvents(ownerId);
+        var events = await _eventRepository.GetUserEvents(ownerId);
 
         return Ok(events);
     }
