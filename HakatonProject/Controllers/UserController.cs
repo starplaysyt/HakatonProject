@@ -30,29 +30,29 @@ public class UserController(ApplicationDataDbContext context, UserRepository usr
         //trying login as simple user
         var user = await userRepository.GetUser(username);
         
-        if (user is null) return Unauthorized();
+        //if (user is null) return Unauthorized();
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Role, user.UserGroup),
-            new Claim("userId", user.Id.ToString())
-        };
-
-        var claimsIdentity = new ClaimsIdentity(
-            claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true, 
-            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(6)
-        };
-
-
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity),
-            authProperties);
+        // var claims = new[]
+        // {
+        //     new Claim(ClaimTypes.Name, user.Login),
+        //     new Claim(ClaimTypes.Role, user.UserGroup),
+        //     new Claim("userId", user.Id.ToString())
+        // };
+        //
+        // var claimsIdentity = new ClaimsIdentity(
+        //     claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //
+        // var authProperties = new AuthenticationProperties
+        // {
+        //     IsPersistent = true, 
+        //     ExpiresUtc = DateTimeOffset.UtcNow.AddHours(6)
+        // };
+        //
+        //
+        // await HttpContext.SignInAsync(
+        //     CookieAuthenticationDefaults.AuthenticationScheme,
+        //     new ClaimsPrincipal(claimsIdentity),
+        //     authProperties);
         
         return RedirectToAction("Index", "Home");
         //return Json(new LoginResultDTO {UserId = user.Id.ToString(), UserName = user.Login, UserRole = user.UserGroup});
@@ -76,12 +76,12 @@ public class UserController(ApplicationDataDbContext context, UserRepository usr
             Name = name,
             Login = username,
             Password = password,
-            //Job = job,
-            // UserFaculty = faculty,
-            // UserGroup = userGroup
+            Job = "Job",
+            UserFaculty = new Faculty(),
+            UserGroup = "User"
         };
         
-        var res = userRepository.AddUser(user);
+        await userRepository.AddUser(user);
 
         return RedirectToAction("Index", "Home");
     }
@@ -94,8 +94,7 @@ public class UserController(ApplicationDataDbContext context, UserRepository usr
     }
     
     [HttpGet("{username}")]
-    [Authorize]
-    public async Task<ActionResult> GetUserByUserName(string username)
+    public ActionResult<User> GetUserByUserName(string username)
     {
         return Ok();
     }

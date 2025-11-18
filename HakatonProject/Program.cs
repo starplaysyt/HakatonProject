@@ -53,7 +53,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/AuthPage";   // куда редиректить, если не авторизован
+        options.LoginPath = "/login";   // куда редиректить, если не авторизован
         options.AccessDeniedPath = "/Home/denied"; // при запрещённом доступе
         options.ExpireTimeSpan = TimeSpan.FromHours(6);
     });
@@ -98,7 +98,6 @@ else
 app.UseHttpsRedirection(); //мб удалить, если неправильно будет отрабатывать сертификат
 app.UseRouting();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

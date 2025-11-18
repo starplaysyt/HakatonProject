@@ -45,7 +45,8 @@ public class EventsPageController(EventRepository repo) : Controller
             Description = description,
             TimeStart = DateTime.Parse(startTime),
             TimeEnd = DateTime.Parse(endTime),
-            ImagePath = eventImage != null ? Path.Combine("uploads", eventImage.FileName) : null
+            ImagePath = eventImage != null ? Path.Combine("uploads", eventImage.FileName) : null,
+            Type = "testtype"
         };
         
         await repo.TryAddEvent(newEvent);

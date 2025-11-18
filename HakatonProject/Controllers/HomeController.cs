@@ -1,18 +1,16 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using HakatonProject.Data;
-using HakatonProject.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HakatonProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HakatonProject.Controllers;
 
-[Authorize]
 public class HomeController : Controller
 {
     private readonly ApplicationDataDbContext _context;
-
+    
     private readonly ILogger _logger;
 
     public HomeController(ILogger logger, ApplicationDataDbContext context)
@@ -25,7 +23,6 @@ public class HomeController : Controller
     {
         if (User.Identity?.IsAuthenticated == true)
         {
-
             var username = User.Identity.Name;
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
             var userId = User.FindFirst("userId")?.Value;
@@ -48,7 +45,6 @@ public class HomeController : Controller
 
     public IActionResult Login()
     {
-        
         return View();
     }
     
