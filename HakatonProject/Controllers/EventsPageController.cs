@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[Authorize]
 public class EventsPageController(EventRepository repo) : Controller
 {
     [HttpGet]
