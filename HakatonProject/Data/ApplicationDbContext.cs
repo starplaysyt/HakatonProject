@@ -8,5 +8,6 @@ public class ApplicationAuthDbContext : IdentityDbContext
     public ApplicationAuthDbContext(DbContextOptions<ApplicationAuthDbContext> options)
         : base(options)
     {
+        Console.WriteLine(Database.EnsureCreated());
     }
 }
