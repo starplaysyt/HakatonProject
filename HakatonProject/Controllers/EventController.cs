@@ -1,35 +1,81 @@
+using System.Security.Claims;
+using HakatonProject.Models;
+using HakatonProject.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
 [Route("api/[controller]")]
 public class EventController : ControllerBase
 {
     private readonly EventRepository _eventRepository;
+    private readonly PlaceRepository _placeRepository;
+    private readonly UserRepository _userRepository;
 
-    public EventController(EventRepository eventRepository)
+    private readonly CurrentUserService _currentUserService;
+
+    public EventController(EventRepository eventRepository, UserRepository userRepository, CurrentUserService currentUserService, PlaceRepository placeRepository)
     {
         _eventRepository = eventRepository;
+        _placeRepository = placeRepository;
+        _userRepository = userRepository;
+        _currentUserService = currentUserService;
     }
 
     [HttpGet("list")]
-    public ActionResult<List<Event>> GetEventList()
+    public async Task<ActionResult<List<Event>>> GetEventList()
     {
         var events = _eventRepository.GetEvents();
         return Ok(events);
     }
 
-
-    [HttpPost]
-    public async Task<ActionResult> CreateEvent(Event _event)
+    [HttpGet]
+    [Route("user-events")]
+    public async Task<ActionResult<Event[]>> GetUserEvents(long id)
     {
-        try
-        {
-            await _eventRepository.CreateEvent(_event);
-            return Ok();
+        var _events = await _eventRepository.GetUserEvents(id);
+
+        return Ok(_events);
+    }
+
+
+    [HttpPost("create")]
+    public async Task<ActionResult> CreateEvent(CreateEventDTO dto)
+    {
+        try{
+            var userId = _currentUserService.GetCurrentUserId();
+            if(userId == null)
+                return Unauthorized("User not authorized");
+
+            var user = await _userRepository.GetUser(userId.Value.ToString());
+            if (user == null)
+                return BadRequest("User not found in database");
+
+            var place = await _placeRepository.GetPlace(dto.PlaceId);
+            if (place == null)
+                return BadRequest("Place not found");
+
+            Event newEvent = new Event
+            {
+                Owner = user,
+                Name = dto.Name,
+                Description = dto.Description,
+                Place = place,
+                TimeStart = dto.TimeStart,
+                TimeEnd = dto.TimeEnd,
+                Type = dto.Type
+            };
+
+            await _eventRepository.TryCreateEvent(newEvent);
+            return Ok(new { 
+                message = "Event created successfully", 
+                eventId = newEvent.Id 
+            });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new { error = ex.Message });
         }
     }
 }

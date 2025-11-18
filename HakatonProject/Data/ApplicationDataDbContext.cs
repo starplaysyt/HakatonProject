@@ -21,12 +21,7 @@ public class ApplicationDataDbContext : DbContext
     public DbSet<UserContact> UserContacts { get; set; }
     public DbSet<UserEvent> UserEvents { get; set; }
     public DbSet<UserInterest> UserInterests { get; set; }
-
-
-    //public DbSet<Owner> Owners { get; set; }
-
-
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

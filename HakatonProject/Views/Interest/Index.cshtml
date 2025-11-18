@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои интересы | Active Graph</title>
+    
+    <link rel="stylesheet" href="~/styles/style.css">
+    
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"> 
+</head>
+<body>
+<div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../assets/logo.png" alt="logo">
+                Active Graph
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="Home"><span class="iconify" data-icon="mynaui:home"></span></a></li>
+                <li><a href="AnalyticPage"><span class="iconify" data-icon="uim:analytics"></span></a></li>
+                <li><a href="EventsPage"><span class="iconify" data-icon="material-symbols:event-note-rounded"></span></a></li>
+            </ul>
+            <div class="sidebar-profile">
+                <a href="Interest" style="color: #fff;"><span class="iconify" data-icon="eos-icons:admin"></span></a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+
+            <div class="widget events-card" style="grid-column: 1 / -1; min-height: 85vh; display: flex; flex-direction: column;">
+    
+                <div class="header-ec">
+                    <h3><span class="iconify" data-icon="material-symbols:interests-rounded"></span> Мои интересы</h3>
+                </div>
+            
+                <div id="interest-cards-wrapper" class="interest-card-wrapper">
+                    <!-- Интересы будут загружены через JavaScript -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+
+    <script src="~/scripts/Interes.js"></script>
+</body>
+</html>

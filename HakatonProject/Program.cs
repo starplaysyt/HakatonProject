@@ -1,10 +1,14 @@
 using System.Text;
+using HakatonProject.Controllers;
 using HakatonProject.Data;
+using HakatonProject.Models.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
-var _universalKey = "AKJS-189A-1293-KLZQ"u8.ToArray();
+var _universalKey = "AKJS-189A-1293-KLZQJAHSDJHAJSHHHJZHXKCKHKZXHKCHK"u8.ToArray();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +21,20 @@ var loggerFactory = LoggerFactory.Create(logging =>
 
 var globalLogger = loggerFactory.CreateLogger("Global"); //Глобальный логгер, для вывода юзаем имено его
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSingleton(loggerFactory);
 builder.Services.AddSingleton(globalLogger);
+
+builder.Services.AddScoped<CurrentUserService>();
+
+builder.Services.AddScoped<EventRepository>();
+builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<FacultiesRepository>();
+builder.Services.AddScoped<InterestRepository>();
+builder.Services.AddScoped<PlaceRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ChartDataController>();
 
 // Add services to the container.
 var connectionAuthString = builder.Configuration.GetConnectionString("AuthConnection") ??
@@ -34,18 +50,12 @@ builder.Services.AddDbContext<ApplicationDataDbContext>(options => options.UseSq
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(_universalKey),
-        };
+        options.LoginPath = "/AuthPage";   // куда редиректить, если не авторизован
+        options.AccessDeniedPath = "/Home/denied"; // при запрещённом доступе
+        options.ExpireTimeSpan = TimeSpan.FromHours(6);
     });
 
 builder.Services.AddAuthorization();
@@ -53,6 +63,11 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -67,6 +82,11 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
 }
 else
 {

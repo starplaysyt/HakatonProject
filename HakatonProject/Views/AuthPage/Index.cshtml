@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход / Регистрация | Active Graph</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="widget auth-card">
+            
+            <div class="auth-tabs">
+                <button class="tab-button active" data-tab="login">Вход</button>
+                <button class="tab-button" data-tab="register">Регистрация</button>
+            </div>
+
+            <form asp-controller="User" asp-action="Login" method="post" class="auth-form active">
+                <div class="logo-area">
+                    <img src="assets/logo.png" alt="logo">
+                    <p class="logo-text">Active Graph</p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="username">Email или Логин</label>
+                    <input name="username" type="text" id="username" class="styled-input" placeholder="Введите ваш email или логин" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Пароль</label>
+                    <input name="password" type="password" id="password" class="styled-input" placeholder="Введите пароль" required>
+                </div>
+
+                <button type="submit" class="event-button" style="width: 100%;">Войти</button>
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+            </form>
+
+            <form asp-action="Register" asp-controller="User" id="register-form" class="auth-form hidden">
+                <div class="logo-area">
+                    <img src="assets/logo.png" alt="logo">
+                    <p class="logo-text">Active Graph</p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-name">Имя</label>
+                    <input name="name" type="text" id="register-name" class="styled-input" placeholder="Андрей" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="register-email">UserName</label>
+                    <input name="username" type="text" id="register-email" class="styled-input" placeholder="user1234" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-password">Пароль</label>
+                    <input name="password" type="password" id="register-password" class="styled-input" placeholder="Придумайте пароль" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-confirm-password">Подтвердите пароль</label>
+                    <input type="password" id="register-confirm-password" class="styled-input" placeholder="Повторите пароль" required>
+                </div>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="termsCheckbox">
+                    <span class="checkbox-visual">
+                    </span>
+                    <span class="checkbox-label-text">Я согласен на обработку и защиту персональных данных.</span>
+                </label>
+                <button type="submit" id="submitButton" class="event-button" style="width: 100%;" disabled>Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const forms = document.querySelectorAll('.auth-form');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    forms.forEach(form => {
+                        form.classList.add('hidden');
+                        form.classList.remove('active');
+                    });
+                    
+                    const activeForm = document.getElementById(tabName + '-form');
+                    if (activeForm) {
+                        activeForm.classList.remove('hidden');
+                        activeForm.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+    <script>
+    // Ждем, пока вся страница (HTML) загрузится
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 1. Находим наши элементы по их ID
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const submitButton = document.getElementById('submitButton');
+
+        // 2. Вешаем "слушателя" на чекбокс, 
+        //    который сработает при каждом клике (событие 'change')
+        termsCheckbox.addEventListener('change', () => {
+            
+            // 3. Проверяем, нажат ли чекбокс
+            if (termsCheckbox.checked) {
+                // Если ДА - убираем атрибут 'disabled' у кнопки
+                submitButton.disabled = false;
+            } else {
+                // Если НЕТ - возвращаем атрибут 'disabled'
+                submitButton.disabled = true;
+            }
+
+            // --- Короткая версия того же кода ---
+            // submitButton.disabled = !termsCheckbox.checked;
+        });
+
+    });
+</script>
+
+</body>
+</html>

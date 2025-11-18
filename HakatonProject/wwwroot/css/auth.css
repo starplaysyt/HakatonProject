@@ -1,0 +1,150 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 96vh;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    width: 420px;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+
+.logo-area {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo-icon {
+    font-size: 52px;
+    color: #E0E0E0;
+}
+
+.logo-text {
+    font-size: 14px;
+    color: #8B8DA0;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.auth-tabs {
+    display: flex;
+    background-color: #4A4C60;
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background-color: transparent;
+    color: #8B8DA0;
+    font-size: 16px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.tab-button.active {
+    background: linear-gradient(180deg, #545871 0%, #484355 100%); 
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.auth-form.hidden {
+    display: none;
+}
+
+.forgot-password {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #8B8DA0;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #E0E0E0;
+}
+
+.logo-area img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    color: #E0E0E0;
+    padding-bottom: 15px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    display: none;
+}
+.custom-checkbox .checkbox-visual {
+    width: 20px;
+    height: 20px;
+    background-color: #4A4C60;
+    border-radius: 6px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox .checkbox-visual .fa-check {
+    font-size: 12px;
+    color: #FFFFFF;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-visual {
+    background-color: #B38FDB; 
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-visual .fa-check {
+    opacity: 1;
+    transform: scale(1);
+}
+.custom-checkbox:hover .checkbox-visual {
+    box-shadow: 0 0 0 2px rgba(179, 143, 219, 0.5);
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #B38FDB; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.event-button:disabled {
+    background-color: #4A4C60; 
+    color: #8B8DA0;
+    cursor: not-allowed;
+}

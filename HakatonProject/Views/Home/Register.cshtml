@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Регистрация";
+    var faculties = ViewBag.Faculties as List<Faculty>;
+}
+
+<h2>Регистрация</h2>
+
+<form asp-controller="User" asp-action="Register" method="post" class="register-form">
+    <div>
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" class="form-control" required />
+    </div>
+
+    <div>
+        <label for="username">Логин</label>
+        <input type="text" id="username" name="username" class="form-control" required />
+    </div>
+
+    <div>
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" class="form-control" required />
+    </div>
+
+    <div>
+        <label for="job">Должность</label>
+        <input type="text" id="job" name="job" class="form-control" />
+    </div>
+
+    <div>
+        <label for="facultyId">Факультет</label>
+        <select id="facultyId" name="facultyId" class="form-control" required>
+            <option value="">Выберите факультет</option>
+            @if (faculties != null)
+            {
+                foreach (var f in faculties)
+                {
+                    <option value="@f.Id">@f.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="userGroup">Группа</label>
+        <input type="text" id="userGroup" name="userGroup" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Зарегистрироваться</button>
+
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger mt-2">@ViewBag.Error</p>
+    }
+</form>
+
+<style>
+    .register-form {
+        max-width: 400px;
+        margin: 50px auto;
+    }
+</style>
